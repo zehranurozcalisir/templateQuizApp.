@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quiz Application</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="div2 "><svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg">
+    <defs>
+      <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" style="stop-color: #FFF08E;"></stop>
+        <stop offset="100%" style="stop-color: #FFFFC7;"></stop>
+      </linearGradient>
+    </defs>
+    <path  fill="url(#gradient)">
+      <animate attributeName="d"
+        dur="10000ms"
+        repeatCount="indefinite"
+        values="M444,327Q404,404,327,415Q250,426,163.5,424.5Q77,423,48.5,336.5Q20,250,55.5,170.5Q91,91,170.5,72Q250,53,319,82.5Q388,112,436,181Q484,250,444,327Z;
+        M426.5,328.5Q407,407,328.5,433Q250,459,171,433.5Q92,408,72,329Q52,250,85.5,184.5Q119,119,184.5,59.5Q250,0,324,51Q398,102,422,176Q446,250,426.5,328.5Z;
+        M417.5,312Q374,374,312,433.5Q250,493,164,457.5Q78,422,63,336Q48,250,68.5,169.5Q89,89,169.5,57Q250,25,331.5,56Q413,87,437,168.5Q461,250,417.5,312Z;
+        M422,329Q408,408,329,428.5Q250,449,168,431.5Q86,414,71.5,332Q57,250,90,186.5Q123,123,186.5,63.5Q250,4,313.5,63.5Q377,123,406.5,186.5Q436,250,422,329Z;
+        M429.5,324Q398,398,324,412.5Q250,427,170,418.5Q90,410,76,330Q62,250,74.5,168.5Q87,87,168.5,58.5Q250,30,318,72Q386,114,423.5,182Q461,250,429.5,324Z;
+        M444,327Q404,404,327,415Q250,426,163.5,424.5Q77,423,48.5,336.5Q20,250,55.5,170.5Q91,91,170.5,72Q250,53,319,82.5Q388,112,436,181Q484,250,444,327Z"></animate>
+      
+    </path>
+  </svg></div>
+  <div id="myModal" class="myModal z-2">
+    <div class="modal-content">
+      <span class="close" id="closeBtn">&times;</span>
+      <p>
+        <ul> <li>Each question will remain on the screen for 30 seconds, and for the first 10 seconds, answer options cannot be clicked.</li>
+        <li>After the 30th second, if no answer is provided, the quiz will automatically move on to the next question.</li>
+          <li>At the end of the test, the answers given to each question should be displayed in a table.</li></ul> 
+        </p>
+      <p>You can turn off the warning.</p>
+      <button id="okBtn">OK</button>
+    </div>
+  </div>
+  <div id="container">
+      <h1 class="title">Quiz Start!</h1>
+<h2 id="question"></h2>
+    <ul id="answersList"></ul>
+    <button id="nextBtn" >Next</button>
+  </div>
+  
+  <div id="resultContainer" style="display: none;">
+    <h2 class="resultTitle">Quiz Result</h2>
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Answer</th>
+        </tr>
+      </thead>
+      <tbody id="resultBody"></tbody>
+    </table>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var circle = document.querySelector(".div2");
+        var speedX = 1; // X eksenindeki hareket hızı
+        var speedY = 1; // Y eksenindeki hareket hızı
+
+        // Daireyi hareket ettiren fonksiyonu tanımla
+        function moveCircle() {
+            var windowHeight = window.innerHeight - 50;
+            var windowWidth = window.innerWidth - 50;
+            var currentTop = parseInt(circle.style.top) || 0;
+            var currentLeft = parseInt(circle.style.left) || 0;
+
+            var newTop = currentTop + speedY;
+            var newLeft = currentLeft + speedX;
+
+            // Ekrana çarpma kontrolü
+            if (newTop <= 0 || newTop >= windowHeight) {
+                speedY = -speedY; // Y ekseninde yönü tersine çevir
+            }
+
+            if (newLeft <= 0 || newLeft >= windowWidth) {
+                speedX = -speedX; // X ekseninde yönü tersine çevir
+            }
+
+            // Yeni pozisyonları uygula
+            circle.style.top = newTop + "px";
+            circle.style.left = newLeft + "px";
+
+            // Hareketi devam ettir
+            requestAnimationFrame(moveCircle);
+        }
+
+        // İlk hareketi başlat
+        moveCircle();
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+  // ... Your existing code ...
+
+  var modal = document.getElementById("myModal");
+
+// Get the close button
+var closeBtn = document.getElementById("closeBtn");
+
+// Get the OK button
+var okBtn = document.getElementById("okBtn");
+
+// When the page first loads, display the modal
+modal.style.display = "block";
+
+// Close the modal when the close button is clicked
+closeBtn.onclick = function() {
+  modal.style.display = "none";
+};
+
+// Close the modal and start the quiz when the OK button is clicked
+okBtn.onclick = function() {
+  modal.style.display = "none";
+  // Enable the "Next" button to start the quiz
+  document.getElementById("next-btn").disabled = false;
+};
+});
+
+</script>
+</body>
+</html>
